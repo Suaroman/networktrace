@@ -8,7 +8,7 @@ start_tcpdump() {
     SESSION_NAME=${1:-$DEFAULT_SESSION_NAME}
     PORTS=${2:-"10001"}
 
-    # Transform the comma-separated list into the format "port xxx or port yyy or port zzz"
+    
     PORTS_FORMATTED=$(echo $PORTS | sed 's/,/ or port /g')
     FILE_PATH="/tmp/${SESSION_NAME}-network-trace.pcap"
     TMUX_COMMAND="sudo tcpdump -w $FILE_PATH -i eth0 port $PORTS_FORMATTED -C 500 -W 20"
@@ -32,10 +32,22 @@ stop_tcpdump() {
     if [ $? = 0 ]; then
         tmux kill-session -t $SESSION_NAME
         echo "Stopped the tcpdump running in the tmux session named '$SESSION_NAME'"
+
+        ZIP_PATH="/tmp/${SESSION_NAME}-network-trace-$(hostname).zip"
+
+        # Zip the pcap files
+        sudo zip "$ZIP_PATH" /tmp/${SESSION_NAME}*pcap*
+        echo -e "\n  === > $ZIP_PATH"
+
+        # Remove the pcap files
+        sudo rm /tmp/${SESSION_NAME}*pcap* 
+        # echo "Zipped and removed pcap files for session '$SESSION_NAME'" 
+
     else
         echo "No active tcpdump session named '$SESSION_NAME' found."
     fi
 }
+
 
 show_status() {
     SESSION_NAME=${1:-$DEFAULT_SESSION_NAME}
@@ -72,3 +84,4 @@ case "$1" in
         echo "For multiple ports, use comma separated without space e.g., 80,443"
         ;;
 esac
+
