@@ -1,6 +1,16 @@
 # TraceRoller: A TCPDump Rolling Trace Tool
 
-`TraceRoller.sh` is a user-friendly tool that allows users to capture network traffic in a rolling trace fashion using `tcpdump`, all within a `tmux` session. This ensures that even if your SSH session is disconnected or you log out, the capture will continue to run.   
+`TraceRoller.sh` is a user-friendly tool that allows users to capture network traffic in a rolling trace fashion using `tcpdump`, all within a `tmux` session. This means that even if your SSH session is disconnected or you log out, the capture will continue to run.
+
+**How it works:**
+
+- **Rolling Trace Files:** The tool captures traffic into `.pcap` files that roll over. Each file is limited to 500MB, and a maximum of 20 such files are created. This configuration allows the tool to capture up to 10GB of trace data before it starts overwriting the oldest traces.
+  
+- **Session Management:** The trace capture operates within a `tmux` session, which allows it to persist beyond the lifespan of the initiating shell or SSH session. This offers uninterrupted trace collection even if the user disconnects or logs out.
+  
+- **Port Specification:** By default, the tool captures traffic on port `10001`. However, you can specify any port or set of comma-separated ports as an argument to focus the trace on specific traffic.
+  
+- **Easy Management:** You can start, stop, check the status of, or list the `tmux` sessions using the provided commands.
 
 &nbsp;
 &nbsp;
