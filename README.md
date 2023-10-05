@@ -2,6 +2,13 @@
 
 `TraceRoller.sh` is a user-friendly tool that allows users to capture network traffic in a rolling trace fashion using `tcpdump`, all within a `tmux` session. This ensures that even if your SSH session is disconnected or you log out, the capture will continue to run.
 
+
+## Installation
+```
+wget https://raw.githubusercontent.com/Suaroman/networktrace/master/TraceRoller.sh && chmod +x TraceRoller.sh
+```
+
+
 ## Usage
 
 ```
