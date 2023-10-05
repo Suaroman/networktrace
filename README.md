@@ -71,7 +71,7 @@ adding: tmp/hs2-network-trace.pcap00 (deflated 81%)
 Another use-case could be capturing `winbindd` network-related flows.
 
 ```bash
-./TraceRoller.sh start samba-winbind 445,53,389,88
+./TraceRoller.sh start samba-winbind 445,135,53,389,88
 tcpdump is now running in the tmux session named 'samba-winbind'
 
 ./TraceRoller.sh list
